@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY LOVE LOCK 💖</title>
+    <style>
+        :root {
+            --card-bg: rgba(255, 255, 255, 0.88);
+            --primary-pink: #ff6b8b;
+            --hover-pink: #ff477e;
+            --text-color: #4a4a4a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.8s ease-in-out;
+            background-image: url('http://googleusercontent.com/image_collection/image_retrieval/5697250737254879161_0');
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 238, 242, 0.25);
+            z-index: 1;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 35px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 107, 139, 0.3);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+            transition: all 0.5s ease;
+        }
+
+        h2 {
+            color: var(--primary-pink);
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        input[type="password"] {
+            width: 80%;
+            padding: 12px;
+            border: 2px solid #ffccd5;
+            border-radius: 25px;
+            outline: none;
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        button {
+            background-color: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: var(--hover-pink);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            position: relative;
+            height: 60px;
+        }
+
+        .runaway-no {
+            position: absolute;
+            background-color: #95a5a6;
+            transition: all 0.15s ease;
+            z-index: 999;
+        }
+
+        .static-yes {
+            position: absolute;
+            left: 25%;
+        }
+
+        .custom-overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 80%;
+            max-width: 400px;
+            font-size: 22px;
+            line-height: 1.6;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            background: rgba(255, 107, 139, 0.95);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            z-index: 10000;
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s;
+        }
+
+        .custom-overlay.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .birthday-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-pink);
+            margin-bottom: 20px;
+        }
+
+        .wishes-box {
+            text-align: left;
+            background: rgba(255, 245, 247, 0.93);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary-pink);
+            font-size: 15px;
+            line-height: 1.7;
+            color: #333;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        .wishes-box p {
+            margin-bottom: 15px;
+        }
+
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="phase-lock" class="container">
+        <h2>💖 MY LOVE LOCK 💖</h2>
+        <p>Enter the passcode to enter my heart:</p>
+        <input type="password" id="password-input" placeholder="••••">
+        <br>
+        <button onclick="checkPassword()">Unlock</button>
+        <p id="error-msg" style="color: #e74c3c; font-size: 15px; margin-top: 15px; display: none; font-weight: bold;">
+            oops chanda you broke my heart 💔😭💔
+        </p>
+    </div>
+
+    <div id="phase-love" class="container hidden">
+        <h2>Do you love me, Chandaa? 🥺💕💖</h2>
+        <div class="btn-group">
+            <button class="static-yes" onclick="triggerLoveYes()">Yes</button>
+            <button id="no-btn-1" class="runaway-no" onmouseover="moveNo('no-btn-1')" onclick="moveNo('no-btn-1')" ontouchstart="moveNo('no-btn-1'); event.preventDefault();">No</button>
+        </div>
+    </div>
+
+    <div id="phase-mine" class="container hidden">
+        <h2>Chandaa, will you be mine forever? 🥹💍❤️♾️😭</h2>
+        <div class="btn-group">
+            <button class="static-yes" onclick="triggerMineYes()">Yes</button>
+            <button id="no-btn-2" class="runaway-no" onmouseover="moveNo('no-btn-2')" onclick="moveNo('no-btn-2')" ontouchstart="moveNo('no-btn-2'); event.preventDefault();">No</button>
+        </div>
+    </div>
+
+    <div id="phase-husband" class="container hidden">
+        <h2>Will you accept me as your humble husband, your very own 'joru ka gulam'? 🙇‍♂️💞💍✨</h2>
+        <div class="btn-group">
+            <button class="static-yes" onclick="triggerHusbandYes()">Yes</button>
+            <button id="no-btn-3" class="runaway-no" onmouseover="moveNo('no-btn-3')" onclick="moveNo('no-btn-3')" ontouchstart="moveNo('no-btn-3'); event.preventDefault();">No</button>
+        </div>
+    </div>
+
+    <div id="phase-birthday" class="container hidden">
+        <div class="birthday-title">HAPPY BIRTHDAY CHANDAA ❤️🎂</div>
+        <div class="wishes-box">
+            <p>Aaj ka din mere liye duniya ke sab se khoobsurat dinon mein se ek hai, kyun ke aaj woh shakhs paida hua tha jis ne meri zindagi ko mohabbat, sukoon aur khushiyon se bhar diya.</p>
+            
+            <p>Ap sirf meri mohabbat nahi ho, ap meri best friend, meri himmat, meri khushi aur meri duniya ho. Apky saath guzara hua har lamha mere liye ek khoobsurat yaad hai. Apki muskurahat mera sukoon hai aur apki khushi meri sab se badi dua.</p>
+            
+            <p>Main shukarguzar hoon ke Allah ne mujhe ap jaisa humsafar diya. Main wada karta hoon ke har khushi aur har mushkil mein apka saath dunga, apka haath kabhi nahi chhorunga aur apky har roz pehle se zyada mohabbat karunga. Aj jo maine apsy promise kia hy Inshallah boht jld pura krunga.</p>
+            
+            <p style="text-align: center; font-weight: bold; color: var(--primary-pink); font-size: 16px; margin: 15px 0;">Meri zindagi ki sab se khoobsurat kahani ap ho. ❤️</p>
+            
+            <p style="text-align: center; font-size: 14px; font-weight: 500; margin-bottom: 0;">Happy Birthday, my love. Allah apko hamesha khush, sehatmand aur kamyab rakhe. I love you more than words can ever express. 🌹✨</p>
+        </div>
+    </div>
+
+    <div id="overlay-love" class="custom-overlay">YES I WON ALHAMDULILAH 🕺🏆✨🔥</div>
+    <div id="overlay-mine" class="custom-overlay" style="font-size: 45px;">✨ Inshallah ✨</div>
+    <div id="overlay-husband" class="custom-overlay" style="font-size: 18px; max-width: 420px;">Dear Chandaa mmain wada krta hu ky mai hamesha apsy muhabbat krunga,apki qadar krunga,aur poori zindagi apky chehre pr smile line ki puri koshish krta rahu ga ❤️🥹✨🤞🏼</div>
+
+    <script>
+        const CORRECT_PASSWORD = "2005";
+
+        const backgrounds = [
+            "http://googleusercontent.com/image_collection/image_retrieval/5697250737254879161_0", 
+            "http://googleusercontent.com/image_collection/image_retrieval/5697250737254879161_1", 
+            "http://googleusercontent.com/image_collection/image_retrieval/5697250737254879161_2", 
+            "http://googleusercontent.com/image_collection/image_retrieval/5697250737254879161_3",
+            "http://googleusercontent.com/image_collection/image_retrieval/5697250737254879161_3"
+        ];
+
+        function changeBackground(index) {
+            document.body.style.backgroundImage = `url('${backgrounds[index]}')`;
+        }
+
+        function checkPassword() {
+            const userInput = document.getElementById('password-input').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            if (userInput === CORRECT_PASSWORD) {
+                document.getElementById('phase-lock').classList.add('hidden');
+                document.getElementById('phase-love').classList.remove('hidden');
+                changeBackground(1);
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function moveNo(buttonId) {
+            const noBtn = document.getElementById(buttonId);
+            const x = Math.random() * (window.innerWidth - 120) - (window.innerWidth / 2 - 120);
+            const y = Math.random() * (window.innerHeight - 120) - (window.innerHeight / 2 - 60);
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function playHurrahSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const notes = [261.63, 329.63, 392.00, 523.25, 659.25]; 
+                notes.forEach((freq, index) => {
+                    setTimeout(() => {
+                        let osc = ctx.createOscillator();
+                        let gain = ctx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start();
+                        osc.stop(ctx.currentTime + 0.4);
+                    }, index * 80);
+                });
+            } catch(e) {}
+        }
+
+        function spawnParticles(emojiArray, count) {
+            for(let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.textContent = emojiArray[Math.floor(Math.random() * emojiArray.length)];
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                p.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 3500);
+            }
+        }
+
+        function startHeartRain() {
+            setInterval(() => {
+                spawnParticles(['❤️', '💖', '💕', '🌹', '🌸', '✨'], 3);
+            }, 300);
+        }
+
+        function triggerLoveYes() {
+            playHurrahSound();
+            spawnParticles(['🎉', '🥳', '✨', '🎈', '💥'], 60);
+            
+            const pop = document.getElementById('overlay-love');
+            pop.classList.add('active');
+
+            setTimeout(() => {
+                pop.classList.remove('active');
+                document.getElementById('phase-love').classList.add('hidden');
+                document.getElementById('phase-mine').classList.remove('hidden');
+                changeBackground(2);
+            }, 3000); 
+        }
+
+        function triggerMineYes() {
+            spawnParticles(['❤️', '💖', '💘', '💕', '✨'], 70);
+            
+            const pop = document.getElementById('overlay-mine');
+            pop.classList.add('active');
+
+            setTimeout(() => {
+                pop.classList.remove('active');
+                document.getElementById('phase-mine').classList.add('hidden');
+                document.getElementById('phase-husband').classList.remove('hidden');
+                changeBackground(3); 
+            }, 3000); 
+        }
+
+        function triggerHusbandYes() {
+            spawnParticles(['❤️', '💖', '🥰', '💍', '✨'], 80);
+            
+            const pop = document.getElementById('overlay-husband');
+            pop.classList.add('active');
+
+            setTimeout(() => {
+                pop.classList.remove('active');
+                document.getElementById('phase-husband').classList.add('hidden');
+                document.getElementById('phase-birthday').classList.remove('hidden');
+                changeBackground(4); 
+                startHeartRain();    
+            }, 10000); 
+        }
+    </script>
+</body>
+</html>
